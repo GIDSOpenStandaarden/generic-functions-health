@@ -70,12 +70,12 @@ jobs:
 
       - name: Build FHIR IG
         run: |
+          mkdir -p output
           docker run --rm \
             -v ${PWD}/input:/app/input \
             -v ${PWD}/output:/app/output \
             -v ${PWD}/ig.ini:/app/ig.ini \
             -v ${PWD}/sushi-config.yaml:/app/sushi-config.yaml \
-            -v ${PWD}/build-cache:/app/input-cache \
             localhost:5000/gidsopenstandaarden/gfh-publisher:latest
 
       - name: Upload build artifacts
@@ -101,11 +101,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: fhir-ig-output
+          path: ./artifacts
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './output'
+          path: './artifacts/output'
 
       - name: Deploy to GitHub Pages
         id: deployment
