@@ -46,6 +46,12 @@ Output goes to `output/`. Check `output/qa.html` for errors.
 - Canonical URL: `http://gidsopenstandaarden.org/fhir/gfh`
 - Package ID: `gids.nl.gfh`
 
+## CI/CD
+
+- GitHub Actions workflow in `.github/workflows/build_deploy.yml`
+- Builds Docker image with GHA cache, builds IG, deploys to GitHub Pages (main), creates releases
+- Version extracted from `sushi-config.yaml`
+
 ## Open Design Questions
 
 - How does Matrix room/space membership translate into FHIR interface permissions?

@@ -15,4 +15,5 @@ This Implementation Guide is maintained at [https://github.com/GIDSOpenStandaard
 | Version | Date | Description |
 |---|---|---|
 | current | | Current build (main branch) |
+| 0.2.0 | 2026-03-11 | Revised architecture: Solid + openEHR + FHIR interface + SMART on FHIR + Matrix + VCs. Added CI/CD, licensing, project docs. |
 | 0.1.0 | 2026-03-11 | Initial draft: identity, authorization, data storage, data sharing, module launch, and networks functions |
