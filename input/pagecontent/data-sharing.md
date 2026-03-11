@@ -6,7 +6,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ### Introduction
 
-The Data Sharing function describes how health data — particularly data from wearable devices and self-measurements — can be shared between individuals, services, and healthcare providers. This includes data portability, interoperability, and user-controlled sharing.
+The Data Sharing function describes how health data — particularly data from wearable devices and self-measurements — flows into and out of a person's Solid pod through the FHIR interface. This covers both **ingestion** (getting data in) and **sharing** (giving others access).
 
 ### Problem Overview
 
@@ -14,28 +14,30 @@ Wearable devices and health apps generate large amounts of valuable health data 
 
 - **Siloed in vendor ecosystems**: Garmin data stays in Garmin Connect, Apple Health data stays on iPhone, Fitbit data stays in Google's ecosystem
 - **Not in standard formats**: Each vendor uses proprietary data formats and APIs
-- **Not shareable with healthcare**: Even when a person wants to share wearable data with their GP or coach, there is no standard mechanism to do so
-- **Not portable**: Switching from one wearable brand to another means losing historical data or dealing with incompatible export formats
+- **Not shareable**: Even when a person wants to share wearable data with their GP or coach, there is no standard mechanism to do so
+- **Not portable**: Switching from one wearable brand to another means losing historical data
 
 #### Requirements
 
-- Data sharing MUST use standard formats (FHIR Observation resources)
+- Data ingestion MUST use the FHIR interface on the person's Solid pod
 - Data sharing MUST be user-initiated and user-controlled
-- Data sharing SHOULD support common wearable data sources (Garmin, Apple Health, Fitbit, etc.)
-- Data sharing MUST support both real-time and batch data transfer
-- Data portability MUST be supported: users should be able to export and import their data
+- Wearable connections SHOULD use long-lived access via SMART on FHIR refresh tokens
+- Data sharing MUST support both real-time (Subscriptions) and batch transfer
+- Data portability MUST be supported through standard FHIR Bundles
 
 ### Solution Overview
 
-Health data sharing uses **FHIR Observations** as the common data format, with connectors for popular wearable platforms:
+#### Wearable Data Ingestion
 
-#### Wearable Data Integration
+Wearable data flows into the pod through the FHIR interface using SMART on FHIR (see [Module Launch](module-launch.html)):
 
-1. **Data collection**: Wearable devices collect health metrics (heart rate, steps, sleep, stress)
-2. **API access**: The user authorizes access to their wearable data via the vendor's API (e.g., Garmin Health API)
-3. **FHIR transformation**: A connector service transforms vendor-specific data into FHIR Observation resources
-4. **Storage**: Transformed data is stored in the user's Solid pod
-5. **Sharing**: The user can share specific observations with coaches, peers, or healthcare providers
+1. The user **launches** a wearable connector app via SMART on FHIR
+2. The app requests **long-term access** (offline_access scope) with a refresh token
+3. The connector app periodically **pulls data** from the wearable vendor's API (e.g., Garmin Health API)
+4. The connector **transforms** vendor-specific data into FHIR Observation resources
+5. The connector **writes** Observations to the pod's FHIR interface
+
+For continuous data flows, FHIR [Subscriptions](https://www.hl7.org/fhir/subscription.html) can be used to notify connected apps of new data.
 
 #### Supported Data Types
 
@@ -48,13 +50,23 @@ Health data sharing uses **FHIR Observations** as the common data format, with c
 | Sleep Duration | 93832-4 | Total sleep time |
 | Stress Level | 96895-8 | Perceived stress score |
 
+#### Sharing Data with Others
+
+Once data is in the pod, sharing with coaches, peers, or healthcare providers is managed through:
+
+1. **SMART on FHIR scopes**: The data owner grants read access to specific resource types
+2. **Subscriptions**: Connected parties can subscribe to updates (e.g., a coach receives new vital signs as they arrive)
+3. **FHIR Bundles**: For bulk sharing or data portability, data can be exported as FHIR Bundles
+
+See [Authorization](authorization.html) for how access decisions are made and how Matrix membership relates to sharing permissions.
+
 #### Data Portability
 
 Users can export their data from one platform and import it into another:
 
-- **Export**: All data in the Solid pod can be exported as FHIR Bundles (JSON)
+- **Export**: All data accessible through the FHIR interface can be exported as FHIR Bundles (JSON)
 - **Import**: FHIR Bundles can be imported into any compliant system
-- **Migration**: When switching services, the Solid pod itself can be migrated to a new host
+- **Migration**: The Solid pod itself can be migrated to a new hosting provider
 
 ### Dutch Context
 

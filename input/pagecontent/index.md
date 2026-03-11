@@ -24,28 +24,42 @@ However, when we shift focus from **healthcare** (zorg) to **health** (gezondhei
 
 This Implementation Guide defines the generic functions needed for this health/prevention context.
 
+### Architecture Overview
+
+The architecture is built on the following layered approach:
+
+1. **Data storage** uses [Solid](https://solidproject.org/) pods for self-sovereign storage, with [openEHR](https://www.openehr.org/) as the clinical data layer within the pod.
+2. **Data access** is exposed through a **FHIR R4 interface** on each pod, described by a FHIR CapabilityStatement. FHIR is used as the interoperability interface, not as the storage format.
+3. **App connectivity** uses [SMART on FHIR](https://smarthealthit.org/) for app launch, giving applications short-term or long-term (via refresh tokens and Subscriptions) access to the FHIR API.
+4. **Social networks** use the [Matrix](https://matrix.org/) protocol for invite-based public and private health communities.
+5. **Identity** is managed through Verifiable Credentials with [OID4VCI](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) and [OID4VP](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html), held in a personal wallet.
+
 ### Generic Functions for Health
 
 This IG describes the following generic functions:
 
-| Function | Description | Building Block |
+| Function | Description | Building Blocks |
 |---|---|---|
-| [Identity](identity.html) | Anonymous identity via Verifiable Credentials | MS Authenticator |
-| [Authorization](authorization.html) | User-controlled access to health data | Verifiable Credentials |
-| [Data Storage](data-storage.html) | Self-sovereign data storage | Solid |
-| [Data Sharing](data-sharing.html) | Sharing wearable and self-measurement data | FHIR |
-| [Module Launch](module-launch.html) | Privacy-aware module/app launch | HTI 2.0 |
-| [Networks](networks.html) | Public and private social networks | Matrix |
+| [Identity](identity.html) | Anonymous/pseudonymous identity via Verifiable Credentials | VCs, OID4VCI, OID4VP, personal wallet |
+| [Authorization](authorization.html) | Permissions on personal FHIR interfaces | FHIR CapabilityStatement, Matrix membership |
+| [Data Storage](data-storage.html) | Self-sovereign data storage with clinical data layer | Solid, openEHR, FHIR interface |
+| [Data Sharing](data-sharing.html) | Sharing wearable and self-measurement data | FHIR Observations, SMART on FHIR |
+| [Module Launch](module-launch.html) | App launch and API access | SMART on FHIR |
+| [Networks](networks.html) | Public and private social/health networks | Matrix |
 
 ### Relationship to Healthcare Generic Functions
 
 The healthcare Generic Functions IG defines functions for the professional healthcare domain. This health IG complements it by covering the prevention domain. Where healthcare GF relies on BSN, UZI, and organizational trust, health GF uses anonymous credentials, self-sovereign data, and community-based networks.
 
-The two sets of generic functions can work together: when a person transitions from prevention to care (e.g., when a health concern requires medical attention), data can be handed off from the health context to the healthcare context through appropriate consent and identification mechanisms.
+The two sets of generic functions can work together: when a person transitions from prevention to care (e.g., when a health concern requires medical attention), data can be handed off from the health context to the healthcare context through the FHIR interface and appropriate consent mechanisms.
 
-### Conformance Expectations
+### Open Questions
 
-This IG is in **draft** status. The functions described are based on existing open standards and building blocks (Solid, Matrix, HTI, Verifiable Credentials) but their specific application in the Dutch health/prevention context is still being defined.
+This IG is in **draft** status. Key open questions include:
+
+- How does Matrix room/space membership translate into permissions on a person's FHIR interface?
+- What is the role of FHIR resources like RelatedPerson in modeling access control on Solid pods?
+- How do we handle the liveness problem (proving *current* membership, not just historical)?
 
 ### Dependencies
 
