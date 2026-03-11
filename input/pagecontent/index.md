@@ -26,13 +26,13 @@ This Implementation Guide defines the generic functions needed for this health/p
 
 ### Architecture Overview
 
-The architecture is built on the following layered approach:
+The architecture is built on the following layers:
 
-1. **Data storage** uses [Solid](https://solidproject.org/) pods for self-sovereign storage, with [openEHR](https://www.openehr.org/) as the clinical data layer within the pod.
-2. **Data access** is exposed through a **FHIR R4 interface** on each pod, described by a FHIR CapabilityStatement. FHIR is used as the interoperability interface, not as the storage format.
-3. **App connectivity** uses [SMART on FHIR](https://smarthealthit.org/) for app launch, giving applications short-term or long-term (via refresh tokens and Subscriptions) access to the FHIR API.
-4. **Social networks** use the [Matrix](https://matrix.org/) protocol for invite-based public and private health communities.
-5. **Identity** is managed through Verifiable Credentials with [OID4VCI](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) and [OID4VP](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html), held in a personal wallet.
+1. **Identity** is managed through [Verifiable Credentials](https://www.w3.org/TR/vc-data-model-2.0/) (VCs), issued and presented via [OID4VCI](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) and [OID4VP](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html), held in a personal wallet. VCs attest to **attributes** (e.g., "participant in program X") — not permissions.
+2. **Data storage** uses [Solid](https://solidproject.org/) pods for self-sovereign storage, with [openEHR](https://www.openehr.org/) as the clinical data layer within the pod. Data is exposed through a **FHIR R4 interface**, not stored as FHIR.
+3. **Authorization** operates at two levels: **people** are authorized by the data owner to access specific health data (role-based or individually), and **applications** are then authorized via [SMART on FHIR](https://smarthealthit.org/) to act on behalf of those people.
+4. **Data access** uses SMART on FHIR for application connectivity — both interactive (short-term) and persistent (long-term via refresh tokens). This covers app launch, wearable data ingestion, data sharing, and portability.
+5. **Connecting people** uses the [Matrix](https://matrix.org/) protocol for communication (chat, messaging, voice/video) and for building invite-based social networks around health and prevention.
 
 ### Generic Functions for Health
 
@@ -41,11 +41,10 @@ This IG describes the following generic functions:
 | Function | Description | Building Blocks |
 |---|---|---|
 | [Identity](identity.html) | Anonymous/pseudonymous identity via Verifiable Credentials | VCs, OID4VCI, OID4VP, personal wallet |
-| [Authorization](authorization.html) | Permissions on personal FHIR interfaces | FHIR CapabilityStatement, Matrix membership |
-| [Data Storage](data-storage.html) | Self-sovereign data storage with clinical data layer | Solid, openEHR, FHIR interface |
-| [Data Sharing](data-sharing.html) | Sharing wearable and self-measurement data | FHIR Observations, SMART on FHIR |
-| [Module Launch](module-launch.html) | App launch and API access | SMART on FHIR |
-| [Networks](networks.html) | Public and private social/health networks | Matrix |
+| [Authorization](authorization.html) | Who in my network can access what parts of my health data | VCs (attributes), person-level permissions, SMART on FHIR (app delegation) |
+| [Data Storage](data-storage.html) | Self-sovereign data storage with clinical data layer | Solid, openEHR, FHIR R4 interface |
+| [Data Access](data-access.html) | App connectivity, data ingestion, sharing, and portability | SMART on FHIR, FHIR Observations |
+| [Connecting People](connecting-people.html) | Communication, social networks, and community building | Matrix |
 
 ### Relationship to Healthcare Generic Functions
 
@@ -57,9 +56,9 @@ The two sets of generic functions can work together: when a person transitions f
 
 This IG is in **draft** status. Key open questions include:
 
-- How does Matrix room/space membership translate into permissions on a person's FHIR interface?
-- What is the role of FHIR resources like RelatedPerson in modeling access control on Solid pods?
-- How do we handle the liveness problem (proving *current* membership, not just historical)?
+- **Where do person-level permissions live?** Options under consideration: Matrix room membership as implicit permissions, FHIR resources (RelatedPerson/Consent), or a custom authorization service. See [Authorization](authorization.html).
+- **How does Matrix membership map to data access?** Can membership in a Matrix room grant access to specific FHIR resources on a person's pod? How is leaving a room reflected in revoked access? See [Connecting People](connecting-people.html).
+- **How are current memberships proven?** Proving *current* membership (not just historical) requires liveness mechanisms that are not yet standardized in Matrix.
 
 ### Dependencies
 

@@ -23,7 +23,7 @@ Output goes to `output/`. Check `output/qa.html` for errors.
 - `sushi-config.yaml` — IG metadata, page definitions, menu, dependencies
 - `ig.ini` — IG publisher configuration
 - `input/fsh/` — FHIR Shorthand definitions (profiles, extensions, aliases)
-- `input/pagecontent/` — Markdown pages (index, identity, authorization, data-storage, data-sharing, module-launch, networks, history)
+- `input/pagecontent/` — Markdown pages (index, identity, authorization, data-storage, data-access, connecting-people, history)
 - `input/images/` — Images for the IG
 - `input/images-source/` — PlantUML diagram sources
 - `Dockerfile` + `Makefile` — Docker-based build
@@ -34,7 +34,7 @@ Output goes to `output/`. Check `output/qa.html` for errors.
 - **openEHR** as data layer within pods (FHIR is interface, not storage)
 - **FHIR R4** as the interoperability interface, exposed via CapabilityStatement
 - **SMART on FHIR** for app launch (both interactive and long-lived connections)
-- **Matrix** for social/health networks (invite-based)
+- **Matrix** for communication (chat, messaging) and social/health networks (invite-based)
 - **Verifiable Credentials** (OID4VCI/OID4VP) for identity attributes (not permissions)
 - VCs are for **attributes**, not permissions — permissions change too frequently for VCs
 
@@ -54,6 +54,6 @@ Output goes to `output/`. Check `output/qa.html` for errors.
 
 ## Open Design Questions
 
-- How does Matrix room/space membership translate into FHIR interface permissions?
-- Role of FHIR RelatedPerson for modeling access control on Solid pods?
+- Where do person-level permissions live? (Matrix rooms, FHIR RelatedPerson/Consent, or custom authorization service)
+- How does Matrix room/space membership map to data access permissions?
 - Liveness of membership proofs (current vs historical)?

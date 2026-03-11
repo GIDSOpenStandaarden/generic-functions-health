@@ -15,7 +15,7 @@ name: NlGenericFunctionsHealthIG
 title: Netherlands - Generic Functions for Health (Gezondheid) Implementation Guide
 language: en-US
 status: draft
-version: 0.3.0
+version: 0.4.0
 fhirVersion: 4.0.1
 copyrightYear: 2026+
 releaseLabel: ci-build
@@ -51,20 +51,14 @@ pages:
       - url: http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status
         valueCode: draft
 
-  data-sharing.md:
-    title: Data Sharing
+  data-access.md:
+    title: Data Access
     extension:
       - url: http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status
         valueCode: draft
 
-  module-launch.md:
-    title: Module Launch
-    extension:
-      - url: http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status
-        valueCode: draft
-
-  networks.md:
-    title: Networks
+  connecting-people.md:
+    title: Connecting People
     extension:
       - url: http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status
         valueCode: draft
@@ -80,9 +74,8 @@ menu:
   Identity: identity.html
   Authorization: authorization.html
   Data Storage: data-storage.html
-  Data Sharing: data-sharing.html
-  Module Launch: module-launch.html
-  Networks: networks.html
+  Data Access: data-access.html
+  Connecting People: connecting-people.html
   Artifacts: artifacts.html
   History: history.html
 

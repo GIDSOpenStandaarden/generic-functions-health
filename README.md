@@ -16,11 +16,10 @@ It defines the generic functions needed for digital health data exchange in the 
 | Function | Description | Building Blocks |
 |---|---|---|
 | Identity | Anonymous/pseudonymous identity | VCs, OID4VCI, OID4VP, personal wallet |
-| Authorization | Permissions on personal FHIR interfaces | FHIR CapabilityStatement, Matrix membership |
+| Authorization | Who in my network can access what parts of my health data | VCs (attributes), person-level permissions, SMART on FHIR (app delegation) |
 | Data Storage | Self-sovereign storage with clinical data layer | Solid, openEHR, FHIR interface |
-| Data Sharing | Sharing wearable and self-measurement data | FHIR Observations, SMART on FHIR |
-| Module Launch | App launch and API access | SMART on FHIR |
-| Networks | Public and private social/health networks | Matrix |
+| Data Access | App connectivity, data ingestion, sharing, and portability | SMART on FHIR, FHIR Observations |
+| Connecting People | Communication, social networks, and community building | Matrix |
 
 ## Local Development
 

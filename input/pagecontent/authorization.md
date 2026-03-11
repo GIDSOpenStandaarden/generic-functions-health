@@ -6,81 +6,126 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ### Introduction
 
-The Authorization function describes how access to health data is controlled. Each person's health data is stored in a Solid pod that exposes a FHIR interface (see [Data Storage](data-storage.html)). The central question is: **who gets access to which parts of this FHIR interface, and how are those permissions managed?**
+The Authorization function describes how **people** are authorized to access another person's health data. This is distinct from how **applications** are authorized (which is handled by SMART on FHIR — see [Data Access](data-access.html)). The central question is: who in my network is allowed to see or modify what parts of my health data?
 
 ### Problem Overview
 
 In healthcare, authorization is managed through:
 
-- **Organizational trust**: Healthcare providers trust each other through the Nuts network, PKI certificates, and contractual agreements
 - **Professional roles**: Access is granted based on UZI role codes and treatment relationships
-- **Policy-based access control (PBAC)**: A custodian evaluates access requests against predefined policies
+- **Organizational trust**: Healthcare providers trust each other through PKI certificates and contractual agreements
+- **Policy-based access control (PBAC)**: A custodian evaluates access requests against organizational policies
 
 In the health/prevention context, these mechanisms are not available:
 
-- There is no organizational trust framework between prevention coaches, community workers, and peer supporters
-- There are no standardized professional roles for health/prevention workers
-- The individual (not an organization) should be the primary authority over their own data
+- There are no standardized professional roles for prevention coaches, community workers, or peer supporters
+- There is no organizational trust framework — participants are individuals, not organizations
+- The individual (not an organization) is the authority over their own data
+- Authorization must work for people who may only be known through anonymous or pseudonymous identities (see [Identity](identity.html))
 
 #### Requirements
 
-- Authorization MUST be user-controlled: the individual decides who can access their data
-- Authorization MUST support fine-grained access (e.g., share wearable data but not questionnaire responses)
-- Authorization SHOULD be revocable at any time by the data subject
-- Authorization MUST NOT depend on organizational trust frameworks
-- Verifiable Credentials SHOULD NOT be used for permissions (they are suited for attributes, not for frequently changing access rights)
+- Authorization MUST be about authorizing **people**, not applications
+- The data owner MUST be able to grant and revoke access to specific individuals or roles
+- Authorization SHOULD support both role-based and individual assignment
+- Authorization MUST NOT depend on organizational trust frameworks or professional registries
+- The authorization model MUST work with anonymous/pseudonymous identities
 
 ### Solution Overview
 
-Authorization operates at multiple layers:
+Authorization in the health context operates in three layers:
 
-#### Layer 1: FHIR CapabilityStatement
+#### Layer 1: Verifiable Credentials for Attributes
 
-Each person's Solid pod exposes a FHIR interface with a [CapabilityStatement](https://www.hl7.org/fhir/capabilitystatement.html) that describes what capabilities are available. Different capabilities may have different authorization requirements. For example:
+Before authorization decisions can be made, the system needs to know *who* is requesting access and *what attributes* they have. [Verifiable Credentials](identity.html) serve this purpose:
 
-- A capability for writing wearable Observations may require a long-lived SMART on FHIR connection
-- A capability for reading questionnaire responses may require explicit per-session consent
+- A VC can attest that someone is a "certified prevention coach" or "registered volunteer"
+- A VC can attest membership in a group or program
+- VCs are **not used for permissions** — they answer "who are you?" not "what are you allowed to do?"
 
-The CapabilityStatement is the **published contract** of what the pod's FHIR interface supports and under what conditions.
+The distinction is important: attributes are relatively stable and issued by trusted parties. Permissions are personal, granular, and change frequently — they belong in an authorization system, not in a credential.
 
-#### Layer 2: SMART on FHIR Scopes
+#### Layer 2: Person-Level Authorization
 
-Access to the FHIR interface is granted through [SMART on FHIR](https://smarthealthit.org/) app launch (see [Module Launch](module-launch.html)). SMART on FHIR uses OAuth 2.0 scopes to define what an application can do:
+The core of health authorization is a **permission model that the data owner controls**. The data owner (the person whose health data is stored in a Solid pod) decides what other people can do with their data.
 
-- `patient/Observation.read` — read observations
-- `patient/Observation.write` — write observations
-- `patient/QuestionnaireResponse.read` — read questionnaire responses
+There are two complementary approaches:
 
-The pod owner approves these scopes during the SMART on FHIR authorization flow.
+##### Role-Based Access
 
-#### Layer 3: Relationship-Based Access
+Permissions are assigned to **roles** that correspond to relationship types in the person's network. For example:
 
-Beyond app-level authorization, person-to-person access must be managed. This is where the interaction between **Matrix membership** and **FHIR authorization** becomes relevant.
+| Role | Example Permissions |
+|---|---|
+| Family member | Read vital signs, read care plan |
+| Coach | Read and write questionnaire responses, read vital signs |
+| Peer (support group) | Read shared mood tracking data |
+| GP | Read all health data (when transitioning to care) |
 
-##### Open Question: Matrix Membership as Authorization Basis
+A person entering the network in a certain role (e.g., by being invited to a Matrix room designated as a "coaching" room) would receive the permissions associated with that role.
 
-A person's health-related social network is modeled in Matrix (see [Networks](networks.html)). Matrix rooms and spaces represent relationships: a peer support group, a coaching relationship, a family care circle. The question is whether Matrix membership can serve as a basis for FHIR authorization:
+##### Individual Access
 
-- Can membership in a Matrix room grant read access to specific FHIR resources on a person's pod?
-- Can Matrix's cryptographic event signatures (each `m.room.member` event is ed25519-signed by the homeserver) serve as verifiable proof of a relationship?
-- How do we handle the liveness problem — proving *current* membership rather than historical?
+Permissions are assigned to **specific individuals** regardless of role. For example:
 
-See [MSC3917](https://github.com/matrix-org/matrix-spec-proposals/pull/3917) for a proposal on user-level cryptographic proof of Matrix room membership.
+- "My brother can see my wearable measurements"
+- "My neighbor can see my care plan"
+- "This specific coach can write to my questionnaire responses"
 
-##### Possible Approach: RelatedPerson
+Individual access overrides or supplements role-based access — it is the most granular form of authorization.
 
-FHIR's [RelatedPerson](https://www.hl7.org/fhir/relatedperson.html) resource models relationships between a patient and another person (family member, caregiver, guardian). In the health context, this could be extended to model:
+In practice, both approaches will likely coexist: role-based defaults that can be refined with individual grants or restrictions.
 
-- A peer in a support group
-- A prevention coach
-- A family member involved in care
+#### Layer 3: Application Delegation via SMART on FHIR
 
-The RelatedPerson resource on the pod could be linked to a Matrix identity, and Solid's access control could grant permissions based on these relationships.
+Once a **person** is authorized, they may use an **application** to exercise their permissions. This is where SMART on FHIR comes in (see [Data Access](data-access.html)):
 
-This is an **open design question** — the exact mechanism for translating social relationships (Matrix) into data access permissions (FHIR/Solid) is not yet defined.
+1. An authorized person opens an application via SMART on FHIR
+2. The application acts **on behalf of** that person
+3. The application can only do what the person is authorized to do
+4. SMART on FHIR scopes constrain what the application can do within the person's authorization
+
+This means the authorization chain is: **data owner grants permissions to a person** → **person launches an application** → **application acts on behalf of that person within their permissions**.
+
+### Open Question: Where Do Permissions Live?
+
+The permission model requires some system or data structure that stores: "person X is authorized to do Y with my data." Several options are under consideration:
+
+#### Option A: Matrix Rooms as Permission Structure
+
+Matrix rooms and spaces already represent relationships in the person's network (see [Connecting People](connecting-people.html)). Room membership could serve as the basis for authorization:
+
+- A "coaching" room implies coaching-level permissions
+- A "family" room implies family-level permissions
+- Leaving a room revokes the associated permissions
+
+**Advantages**: permissions are inherently tied to the social structure; no separate system to maintain.
+**Challenges**: Matrix room membership is binary (member or not) — it does not natively support fine-grained permissions per member. The mapping from "room type" to "permission set" must be defined somewhere.
+
+#### Option B: FHIR-Based Relational Data
+
+Permissions could be stored as FHIR resources on the person's Solid pod. For example, using [RelatedPerson](https://www.hl7.org/fhir/relatedperson.html) to model relationships, combined with [Consent](https://www.hl7.org/fhir/consent.html) resources to express what each related person is allowed to do.
+
+**Advantages**: standard FHIR resources; interoperable with healthcare systems; queryable through the FHIR interface.
+**Challenges**: FHIR Consent is complex and designed for healthcare consent workflows — it may be over-engineered for this use case.
+
+#### Option C: Custom Authorization Service
+
+A dedicated authorization service on the Solid pod that maintains a permission table: who can do what. This could be a simple data structure:
+
+| Subject (who) | Action (what) | Resource (on what) |
+|---|---|---|
+| @brother:matrix.org | read | Observation (vital signs) |
+| @coach:health.nl | read, write | QuestionnaireResponse |
+| role:family | read | CarePlan |
+
+**Advantages**: simple, purpose-built, easy to understand and manage.
+**Challenges**: non-standard; requires a custom UI for the data owner to manage permissions.
+
+The choice between these options (or a combination) is an **open design question**.
 
 ### Dutch Context
 
-- **GDPR basis**: In prevention, the legal basis for data processing is typically consent (not treatment relationship as in healthcare). This requires explicit, informed, and revocable consent.
+- **GDPR basis**: In prevention, the legal basis for data processing is typically consent (not treatment relationship as in healthcare). The authorization model must support explicit, informed, and revocable consent by the data owner.
 - **No VZVZ/Mitz equivalent**: The healthcare consent infrastructure (Mitz) does not cover prevention activities. Health authorization must be self-contained.
-- **Interoperability with healthcare**: When a person transitions from prevention to care, authorization mechanisms should support handoff. A person might grant their GP access to specific prevention data through the FHIR interface.
+- **Interoperability with healthcare**: When a person transitions from prevention to care, the person-level authorization model should allow granting access to a healthcare provider (e.g., GP) through the same mechanism.
