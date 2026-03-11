@@ -1,0 +1,90 @@
+# SPDX-FileCopyrightText: 2026 Stichting GIDS Open Standaarden
+# SPDX-FileCopyrightText: 2026 Roland Groen
+#
+# SPDX-License-Identifier: EUPL-1.2
+
+# ╭─────────────────────────Commonly Used ImplementationGuide Properties───────────────────────────╮
+# │  The properties below are used to create the ImplementationGuide resource. The most commonly   │
+# │  used properties are included. For a list of all supported properties and their functions,     │
+# │  see: https://fshschool.org/docs/sushi/configuration/.                                         │
+# ╰────────────────────────────────────────────────────────────────────────────────────────────────╯
+id: gids.nl.gfh
+canonical: http://gidsopenstandaarden.org/fhir/gfh
+url: http://gidsopenstandaarden.org/fhir/gfh/ImplementationGuide/gids.nl.gfh
+name: NlGenericFunctionsHealthIG
+title: Netherlands - Generic Functions for Health (Gezondheid) Implementation Guide
+language: en-US
+status: draft
+version: 0.1.0
+fhirVersion: 4.0.1
+copyrightYear: 2026+
+releaseLabel: ci-build
+license: EUPL-1.2
+jurisdiction: urn:iso:std:iso:3166#NL "Netherlands (the)"
+publisher:
+  name: Stichting GIDS Open Standaarden
+  url: https://www.gidsopenstandaarden.org
+
+dependencies:
+  nictiz.fhir.nl.r4.nl-core: 0.12.0-beta.4
+  nictiz.fhir.nl.r4.zib2020: 0.12.0-beta.4
+
+pages:
+  index.md:
+    title: Home
+
+  identity.md:
+    title: Identity
+    extension:
+      - url: http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status
+        valueCode: draft
+
+  authorization.md:
+    title: Authorization
+    extension:
+      - url: http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status
+        valueCode: draft
+
+  data-storage.md:
+    title: Data Storage
+    extension:
+      - url: http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status
+        valueCode: draft
+
+  data-sharing.md:
+    title: Data Sharing
+    extension:
+      - url: http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status
+        valueCode: draft
+
+  module-launch.md:
+    title: Module Launch
+    extension:
+      - url: http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status
+        valueCode: draft
+
+  networks.md:
+    title: Networks
+    extension:
+      - url: http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status
+        valueCode: draft
+
+  history.md:
+    title: History
+
+parameters:
+  excludettl: true
+
+menu:
+  Home: index.html
+  Identity: identity.html
+  Authorization: authorization.html
+  Data Storage: data-storage.html
+  Data Sharing: data-sharing.html
+  Module Launch: module-launch.html
+  Networks: networks.html
+  Artifacts: artifacts.html
+  History: history.html
+
+instanceOptions:
+  manualSliceOrdering: true

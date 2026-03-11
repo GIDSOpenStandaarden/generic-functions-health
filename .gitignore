@@ -1,0 +1,35 @@
+# SPDX-FileCopyrightText: 2026 Stichting GIDS Open Standaarden
+#
+# SPDX-License-Identifier: EUPL-1.2
+
+# Temporary folders #
+#####################
+temp
+template
+output
+fsh-generated
+input-cache
+build-cache
+
+# Windows generated files #
+###########################
+Thumbs.db
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+
+# backup files #
+################
+*.bak
+*.bkp
+
+translations/
+
+# JetBrains IDEs #
+##################
+.idea
+
+### VS Code ###
+.vscode/
