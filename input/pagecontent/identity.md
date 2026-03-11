@@ -63,6 +63,6 @@ The goal is to move towards a generic, interoperable wallet ecosystem as the mar
 ### Dutch Context
 
 - **BSN restrictions**: The BSN can only be processed by entities with an explicit legal basis. Most health/prevention services do not have this basis.
-- **Persoonlijk Regelregister Samen (PRS)**: The upcoming PRS framework may provide additional mechanisms for user-controlled identity in health contexts.
+- **Pseudonimiseringsdienst (PRS)**: The [PRS](https://github.com/minvws/gfmodules-pseudoniemendienst) is a national pseudonymization service that replaces BSN with cryptographic pseudonyms (using AES-SIV, HMAC-SHA256, and OPRF protocols) so that downstream systems never handle actual BSNs. In the health/prevention context, where BSN usage is not legally permitted, PRS-style pseudonymization could bridge the gap when a person transitions from prevention to care — enabling linkage without exposing civil identity.
 - **Non-entitled individuals**: People without a BSN (undocumented persons, refugees) should still be able to participate in prevention activities. Anonymous VCs enable this.
 - **European Digital Identity Wallet (EUDIW)**: The EU is developing a standardized digital identity wallet under eIDAS 2.0. This IG's approach is aligned with that direction.

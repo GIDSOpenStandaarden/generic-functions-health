@@ -15,7 +15,7 @@ name: NlGenericFunctionsHealthIG
 title: Netherlands - Generic Functions for Health (Gezondheid) Implementation Guide
 language: en-US
 status: draft
-version: 0.2.0
+version: 0.3.0
 fhirVersion: 4.0.1
 copyrightYear: 2026+
 releaseLabel: ci-build
