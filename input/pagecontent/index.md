@@ -32,7 +32,7 @@ The architecture is built on the following layers:
 2. **Data storage** uses [Solid](https://solidproject.org/) pods for self-sovereign storage, with [openEHR](https://www.openehr.org/) as the clinical data layer within the pod. Data is exposed through a **FHIR R4 interface**, not stored as FHIR.
 3. **Authorization** operates at two levels: **people** are authorized by the data owner to access specific health data (role-based or individually), and **applications** are then authorized via [SMART on FHIR](https://smarthealthit.org/) to act on behalf of those people.
 4. **Data access** uses SMART on FHIR for application connectivity — both interactive (short-term) and persistent (long-term via refresh tokens). This covers app launch, wearable data ingestion, data sharing, and portability.
-5. **Connecting people** uses the [Matrix](https://matrix.org/) protocol for communication (chat, messaging, voice/video) and for building invite-based social networks around health and prevention.
+5. **Connecting people** uses the [Matrix](https://matrix.org/) protocol for communication (chat, messaging) and for building invite-based social networks around health and prevention.
 
 ### Generic Functions for Health
 

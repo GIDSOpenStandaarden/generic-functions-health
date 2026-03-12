@@ -15,6 +15,7 @@ This Implementation Guide is maintained at [https://github.com/GIDSOpenStandaard
 | Version | Date | Description |
 |---|---|---|
 | current | | Current build (main branch) |
+| 0.5.0 | 2026-03-12 | Connecting People: removed voice/video, scoped to text messaging |
 | 0.4.0 | 2026-03-11 | Rewrote authorization (person-level model), merged Data Sharing + Module Launch into Data Access, renamed Networks to Connecting People |
 | 0.3.0 | 2026-03-11 | CI fixes, corrected PRS to Pseudonimiseringsdienst |
 | 0.2.0 | 2026-03-11 | Revised architecture: Solid + openEHR + FHIR interface + SMART on FHIR + Matrix + VCs. Added CI/CD, licensing, project docs. |

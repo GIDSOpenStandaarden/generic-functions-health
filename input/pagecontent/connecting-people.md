@@ -40,7 +40,6 @@ Prevention is inherently social — yet current digital health tools treat it as
 Matrix is a federated, open-standard communication protocol. At its core, it provides:
 
 - **Real-time messaging**: One-on-one and group chat with rich text, images, and file attachments
-- **Voice and video**: Encrypted voice and video calls for coaching sessions or group meetings
 - **Threads and topics**: Organized discussions within rooms
 - **End-to-end encryption**: Confidential conversations that even the homeserver cannot read
 - **Message history**: Persistent chat history so participants can catch up at their own pace
@@ -77,7 +76,7 @@ This organic growth creates a social graph that reflects real health relationshi
 |---|---|---|---|
 | Municipal health program | Community announcements, Q&A | Public space with topic rooms | Public |
 | Peer support group | Group chat, shared experiences | Private, invite-only room | Private |
-| Coaching session | 1-on-1 chat, voice/video call | Encrypted room | Confidential |
+| Coaching session | 1-on-1 encrypted chat | Encrypted room | Confidential |
 | Community events | Event announcements, RSVPs | Public room | Public |
 | Family care circle | Coordinating care, sharing updates | Private room with shared data access | Private |
 | Group intervention | Discussion, launching health apps | Private room with SMART on FHIR integration | Private |
