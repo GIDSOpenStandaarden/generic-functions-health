@@ -33,6 +33,7 @@ Output goes to `output/`. Check `output/qa.html` for errors.
 - **Solid** pods for self-sovereign data storage
 - **openEHR** as data layer within pods (FHIR is interface, not storage)
 - **FHIR R4** as the interoperability interface, exposed via CapabilityStatement
+- **Authorization** operates at two levels: the data owner grants **people** access (role-based or individual), then **applications** act on behalf of authorized people via SMART on FHIR
 - **SMART on FHIR** for app launch (both interactive and long-lived connections)
 - **Matrix** for communication (chat, messaging) and social/health networks (invite-based)
 - **Verifiable Credentials** (OID4VCI/OID4VP) for identity attributes (not permissions)

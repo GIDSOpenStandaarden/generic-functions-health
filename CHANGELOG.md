@@ -22,7 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - Authorization: rewrote with three-layer model (VCs for attributes, person-level authorization with role-based and individual access, SMART on FHIR for app delegation)
 - Merged Data Sharing and Module Launch into single Data Access page
-- Renamed Networks to Connecting People, added communication (chat, messaging, voice/video) as primary function alongside social network
+- Renamed Networks to Connecting People, added communication (chat, messaging) as primary function alongside social network
 - Rewrote index page: updated architecture overview, function table, and open questions to reflect current design
 
 ## [0.3.0] - 2026-03-11
