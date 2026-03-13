@@ -8,14 +8,14 @@
 # │  used properties are included. For a list of all supported properties and their functions,     │
 # │  see: https://fshschool.org/docs/sushi/configuration/.                                         │
 # ╰────────────────────────────────────────────────────────────────────────────────────────────────╯
-id: gids.nl.gfh
-canonical: http://gidsopenstandaarden.org/fhir/gfh
-url: http://gidsopenstandaarden.org/fhir/gfh/ImplementationGuide/gids.nl.gfh
-name: NlGenericFunctionsHealthIG
-title: Netherlands - Generic Functions for Health (Gezondheid) Implementation Guide
+id: gids.nl.gfw
+canonical: http://gidsopenstandaarden.org/fhir/gfw
+url: http://gidsopenstandaarden.org/fhir/gfw/ImplementationGuide/gids.nl.gfw
+name: NlGenericFunctionsWellbeingIG
+title: Netherlands - Generic Functions for Wellbeing (Gezondheid en Welzijn) Implementation Guide
 language: en-US
 status: draft
-version: 0.5.0
+version: 0.6.0
 fhirVersion: 4.0.1
 copyrightYear: 2026+
 releaseLabel: ci-build

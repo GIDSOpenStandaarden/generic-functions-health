@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This is a FHIR R4 Implementation Guide (IG) for Generic Functions for Health (Gezondheid), targeting health/prevention use cases in the Netherlands. It is built with FHIR Shorthand (FSH) and the HL7 FHIR IG Publisher.
+This is a FHIR R4 Implementation Guide (IG) for Generic Functions for Wellbeing (Gezondheid en Welzijn), targeting health promotion, prevention, and wellbeing use cases in the Netherlands. It is citizen-driven and community-based. Built with FHIR Shorthand (FSH) and the HL7 FHIR IG Publisher.
 
 ## Build
 
@@ -44,8 +44,8 @@ Output goes to `output/`. Check `output/qa.html` for errors.
 - SPDX license headers on all files: `EUPL-1.2` for code, `CC-BY-SA-4.0` for content (.md)
 - Dependencies: `nictiz.fhir.nl.r4.nl-core` and `nictiz.fhir.nl.r4.zib2020` (0.12.0-beta.4)
 - Page template: Introduction → Problem Overview → Requirements → Solution Overview → Dutch Context
-- Canonical URL: `http://gidsopenstandaarden.org/fhir/gfh`
-- Package ID: `gids.nl.gfh`
+- Canonical URL: `http://gidsopenstandaarden.org/fhir/gfw`
+- Package ID: `gids.nl.gfw`
 
 ## CI/CD
 

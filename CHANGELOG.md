@@ -10,6 +10,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.6.0] - 2026-03-13
+
+### Changed
+
+- Broadened scope from "Health (Gezondheid)" to "Wellbeing (Gezondheid en Welzijn)"
+- Renamed package ID (`gids.nl.gfh` → `gids.nl.gfw`), canonical URL, and IG name
+- Added terminology section to index: wellbeing, health promotion and prevention, citizen-driven, community-based, integrative
+- Reframed index page around citizen-driven, community-based wellbeing context
+- Updated all project docs (README, CLAUDE.md) with new naming and scope
+
 ## [0.5.0] - 2026-03-12
 
 ### Changed

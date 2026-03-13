@@ -4,9 +4,21 @@ SPDX-FileCopyrightText: 2026 Stichting GIDS Open Standaarden
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-This is the Netherlands Generic Functions for Health (Gezondheid) Implementation Guide, published by Stichting GIDS Open Standaarden. It describes the generic functions needed for digital health data exchange in the context of **health** and **prevention** — as opposed to the [Generic Functions for Healthcare (Zorg)](https://build.fhir.org/ig/nuts-foundation/nl-generic-functions-ig/) published by Stichting Nuts, which focuses on professional healthcare delivery.
+This is the Netherlands Generic Functions for Wellbeing (Gezondheid en Welzijn) Implementation Guide, published by Stichting GIDS Open Standaarden. It describes the generic functions needed for digital data exchange in the context of **health promotion**, **prevention**, and **wellbeing** — as opposed to the [Generic Functions for Healthcare (Zorg)](https://build.fhir.org/ig/nuts-foundation/nl-generic-functions-ig/) published by Stichting Nuts, which focuses on professional healthcare delivery.
 
-### Health vs Healthcare
+### Terminology
+
+This IG uses the following terms with specific meanings:
+
+| Term | Definition |
+|---|---|
+| **Wellbeing** (Welzijn) | The broad domain encompassing physical, mental, and social health. This IG operates in the wellbeing domain, which is distinct from — but complementary to — the cure and care domains. |
+| **Health promotion and prevention** | Activities aimed at maintaining and improving health *before* professional healthcare (cure and care) is needed. Health promotion and prevention serve as leverage on cure and care — investing upstream reduces demand downstream. |
+| **Citizen-driven** | The principle that citizens are the primary actors in their own wellbeing. Data, identity, and relationships are owned and controlled by the person, not by institutions. Professionals participate as invited guests in a citizen's network, not as gatekeepers. |
+| **Community-based** | Wellbeing is inherently social. Solutions are built around communities — peer groups, neighborhoods, support networks — rather than individual clinical encounters. |
+| **Integrative** | Combining different perspectives and approaches — social, physical, mental, and community — into a coherent whole, rather than treating them as separate silos. |
+
+#### Wellbeing vs Healthcare
 
 The Dutch healthcare system has established a set of Generic Functions (Generieke Functies) for data exchange between healthcare providers. These functions — covering identification, authentication, authorization, localization, and consent — assume an environment of:
 
@@ -15,14 +27,14 @@ The Dutch healthcare system has established a set of Generic Functions (Generiek
 - **Organizational trust** between healthcare providers
 - **Legal frameworks** such as the WGBO and Wabvpz
 
-However, when we shift focus from **healthcare** (zorg) to **health** (gezondheid) — particularly in the domain of prevention — these assumptions no longer hold. People engaging in prevention activities:
+However, when we shift focus from **healthcare** (zorg) to **wellbeing** (gezondheid en welzijn) — particularly in the domains of health promotion and prevention — these assumptions no longer hold. Citizens engaging in prevention and wellbeing activities:
 
 - May not yet be patients and have no reason to share their BSN
 - Interact with coaches, community workers, and peers — not just healthcare professionals
 - Want to control their own data without relying on organizational infrastructure
 - Need both public community support and private, confidential interactions
 
-This Implementation Guide defines the generic functions needed for this health/prevention context.
+This Implementation Guide defines the generic functions needed for this citizen-driven, community-based wellbeing context.
 
 ### Architecture Overview
 
@@ -30,27 +42,27 @@ The architecture is built on the following layers:
 
 1. **Identity** is managed through [Verifiable Credentials](https://www.w3.org/TR/vc-data-model-2.0/) (VCs), issued and presented via [OID4VCI](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) and [OID4VP](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html), held in a personal wallet. VCs attest to **attributes** (e.g., "participant in program X") — not permissions.
 2. **Data storage** uses [Solid](https://solidproject.org/) pods for self-sovereign storage, with [openEHR](https://www.openehr.org/) as the clinical data layer within the pod. Data is exposed through a **FHIR R4 interface**, not stored as FHIR.
-3. **Authorization** operates at two levels: **people** are authorized by the data owner to access specific health data (role-based or individually), and **applications** are then authorized via [SMART on FHIR](https://smarthealthit.org/) to act on behalf of those people.
+3. **Authorization** operates at two levels: **people** are authorized by the data owner to access specific data (role-based or individually), and **applications** are then authorized via [SMART on FHIR](https://smarthealthit.org/) to act on behalf of those people.
 4. **Data access** uses SMART on FHIR for application connectivity — both interactive (short-term) and persistent (long-term via refresh tokens). This covers app launch, wearable data ingestion, data sharing, and portability.
-5. **Connecting people** uses the [Matrix](https://matrix.org/) protocol for communication (chat, messaging) and for building invite-based social networks around health and prevention.
+5. **Connecting people** uses the [Matrix](https://matrix.org/) protocol for communication (chat, messaging) and for building invite-based social networks around health and wellbeing.
 
-### Generic Functions for Health
+### Generic Functions for Wellbeing
 
 This IG describes the following generic functions:
 
 | Function | Description | Building Blocks |
 |---|---|---|
 | [Identity](identity.html) | Anonymous/pseudonymous identity via Verifiable Credentials | VCs, OID4VCI, OID4VP, personal wallet |
-| [Authorization](authorization.html) | Who in my network can access what parts of my health data | VCs (attributes), person-level permissions, SMART on FHIR (app delegation) |
+| [Authorization](authorization.html) | Who in my network can access what parts of my data | VCs (attributes), person-level permissions, SMART on FHIR (app delegation) |
 | [Data Storage](data-storage.html) | Self-sovereign data storage with clinical data layer | Solid, openEHR, FHIR R4 interface |
 | [Data Access](data-access.html) | App connectivity, data ingestion, sharing, and portability | SMART on FHIR, FHIR Observations |
 | [Connecting People](connecting-people.html) | Communication, social networks, and community building | Matrix |
 
 ### Relationship to Healthcare Generic Functions
 
-The healthcare Generic Functions IG defines functions for the professional healthcare domain. This health IG complements it by covering the prevention domain. Where healthcare GF relies on BSN, UZI, and organizational trust, health GF uses anonymous credentials, self-sovereign data, and community-based networks.
+The healthcare Generic Functions IG defines functions for the professional healthcare (cure and care) domain. This wellbeing IG complements it by covering health promotion and prevention. Where healthcare GF relies on BSN, UZI, and organizational trust, wellbeing GF uses anonymous credentials, self-sovereign data, and community-based networks.
 
-The two sets of generic functions can work together: when a person transitions from prevention to care (e.g., when a health concern requires medical attention), data can be handed off from the health context to the healthcare context through the FHIR interface and appropriate consent mechanisms.
+The two sets of generic functions can work together: when a person transitions from prevention to care (e.g., when a health concern requires medical attention), data can be handed off from the wellbeing context to the healthcare context through the FHIR interface and appropriate consent mechanisms.
 
 ### Open Questions
 

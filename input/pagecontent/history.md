@@ -8,13 +8,14 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 <div markdown="1" class="bg-info">
 
-This Implementation Guide is maintained at [https://github.com/GIDSOpenStandaarden/generic-functions-health](https://github.com/GIDSOpenStandaarden/generic-functions-health).
+This Implementation Guide is maintained at [https://github.com/GIDSOpenStandaarden/generic-functions-wellbeing](https://github.com/GIDSOpenStandaarden/generic-functions-wellbeing).
 
 </div>
 
 | Version | Date | Description |
 |---|---|---|
 | current | | Current build (main branch) |
+| 0.6.0 | 2026-03-13 | Broadened scope to Wellbeing (Gezondheid en Welzijn), renamed package/canonical, added terminology section |
 | 0.5.0 | 2026-03-12 | Connecting People: removed voice/video, scoped to text messaging |
 | 0.4.0 | 2026-03-11 | Rewrote authorization (person-level model), merged Data Sharing + Module Launch into Data Access, renamed Networks to Connecting People |
 | 0.3.0 | 2026-03-11 | CI fixes, corrected PRS to Pseudonimiseringsdienst |

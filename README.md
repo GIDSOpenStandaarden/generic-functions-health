@@ -5,18 +5,18 @@ SPDX-FileCopyrightText: 2026 Roland Groen
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-# Generic Functions for Health (Gezondheid) — FHIR Implementation Guide
+# Generic Functions for Wellbeing (Gezondheid en Welzijn) — FHIR Implementation Guide
 
-This repository contains the FHIR Implementation Guide for **Generic Functions for Health** (Generieke Functies Gezondheid), published by Stichting GIDS Open Standaarden.
+This repository contains the FHIR Implementation Guide for **Generic Functions for Wellbeing** (Generieke Functies Gezondheid en Welzijn), published by Stichting GIDS Open Standaarden.
 
-It defines the generic functions needed for digital health data exchange in the context of **health and prevention** — complementing the [Generic Functions for Healthcare (Zorg)](https://build.fhir.org/ig/nuts-foundation/nl-generic-functions-ig/) published by Stichting Nuts, which focuses on professional healthcare delivery.
+It defines the generic functions needed for citizen-driven, community-based digital data exchange in the context of **health promotion**, **prevention**, and **wellbeing** — complementing the [Generic Functions for Healthcare (Zorg)](https://build.fhir.org/ig/nuts-foundation/nl-generic-functions-ig/) published by Stichting Nuts, which focuses on professional healthcare delivery (cure and care).
 
 ## Generic Functions
 
 | Function | Description | Building Blocks |
 |---|---|---|
 | Identity | Anonymous/pseudonymous identity | VCs, OID4VCI, OID4VP, personal wallet |
-| Authorization | Who in my network can access what parts of my health data | VCs (attributes), person-level permissions, SMART on FHIR (app delegation) |
+| Authorization | Who in my network can access what parts of my data | VCs (attributes), person-level permissions, SMART on FHIR (app delegation) |
 | Data Storage | Self-sovereign storage with clinical data layer | Solid, openEHR, FHIR interface |
 | Data Access | App connectivity, data ingestion, sharing, and portability | SMART on FHIR, FHIR Observations |
 | Connecting People | Communication, social networks, and community building | Matrix |
